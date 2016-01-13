@@ -1,0 +1,15 @@
+{
+  "name": "sachin",
+  "version": "0.0.0",
+  "authors": [
+    "Parminder Singh <paramsinghvc@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
