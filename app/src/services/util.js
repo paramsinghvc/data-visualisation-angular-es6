@@ -58,9 +58,6 @@ export default class Util {
             return a;
         } else if (this.checkIfObject(arr)) {
             let obj = {};
-            for (let v of arr) {
-                cb(v);
-            }
             Object.keys(arr).forEach((k) => {
                 obj[k] = cb(arr[k]);
             })
@@ -80,21 +77,30 @@ export default class Util {
         }, cb)
     }
 
-    reject(arr, cb){
-    	this.filter(arr, (el) => {
-    		return !cb(el);
-    	})
+    reject(arr, cb) {
+        this.filter(arr, (el) => {
+            return !cb(el);
+        })
     }
 
     where(arr, props) {
         return this.filter(arr, (el) => {
-        	return this.propMatchExists(arr, props);
+            return this.propMatchExists(arr, props);
         })
     }
 
-    findWhere(arr, props){
-    	let res = this.where(arr, props);
-    	return res.length > 0 ? : res[0] : null;
+    findWhere(arr, props) {
+        let res = this.where(arr, props);
+        return (res.length > 0) ? res[0] : null;
+    }
+
+    pluck(obj, propsArray) {
+        var o = {};
+        propsArray.forEach((k) => {
+            if (k in obj)
+                o[k] = obj[k];
+        });
+        return o;
     }
 
     propMatchExists(arr, props) {
