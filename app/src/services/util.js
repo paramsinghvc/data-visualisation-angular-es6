@@ -43,14 +43,17 @@ export default class Util {
             return 2 * r;
         });
     */
-    map(arr, cb, conditionalClause) {
+    map(arr, cb, conditionalClause, flipBool) {
         if (this.checkIfArray(arr)) {
             let a = [];
             arr.forEach((el, index) => {
                 let res = cb(el, index);
                 if (conditionalClause) {
-                    if (conditionalClause(el))
+                    if (conditionalClause(el) && !flipBool)
                         a.push(res);
+                    else if (flipBool)
+                        if (!conditionalClause(el))
+                            a.push(res)
                 } else {
                     a.push(res);
                 }
@@ -78,14 +81,14 @@ export default class Util {
     }
 
     reject(arr, cb) {
-        this.filter(arr, (el) => {
-            return !cb(el);
-        })
+        return this.map(arr, (el) => {
+            return el;
+        }, cb, true)
     }
 
     where(arr, props) {
         return this.filter(arr, (el) => {
-            return this.propMatchExists(arr, props);
+            return this.propMatchExists(el, props);
         })
     }
 
@@ -94,20 +97,53 @@ export default class Util {
         return (res.length > 0) ? res[0] : null;
     }
 
-    pluck(obj, propsArray) {
-        var o = {};
-        propsArray.forEach((k) => {
-            if (k in obj)
-                o[k] = obj[k];
+    pluck(arr, prop) {
+        let resArr = []
+        this.each(arr, (el) => {
+            resArr.push(el[prop]);
         });
-        return o;
+        return resArr;
     }
 
-    propMatchExists(arr, props) {
-        Object.keys(props).forEach((k) => {
-            if ((!k in arr) || (arr[k] != props[k]))
-                return false;
+    max(arr, cb) {
+        let m;
+        this.each(arr, (el) => {
+            if (cb && isNaN(el)) {
+                if (m == undefined || cb(el) > m) {
+                    m = cb(el);
+                }
+            } else {
+                if (m == undefined || el > m)
+                    m = el;
+            }
         })
-        return true;
+        return m;
+    }
+
+    min(arr, cb) {
+        let m;
+        this.each(arr, (el) => {
+            if (cb && isNaN(el)) {
+                if (m == undefined || cb(el) < m) {
+                    m = cb(el);
+                }
+            } else {
+                if (m == undefined || el < m)
+                    m = el;
+            }
+        })
+        return m;
+    }
+
+    propMatchExists(obj, props) {
+        //obj = {id : 2, name :'foo'}, props = {name :  'foo'}
+        let res = true;
+        Object.keys(props).forEach((k) => {
+            if ((typeof obj[k] === 'undefined') || (obj[k] !== props[k])) {
+                res = false;
+                return false;
+            }
+        })
+        return res;
     }
 }
