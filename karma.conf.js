@@ -29,7 +29,7 @@ module.exports = function(config) {
             transform: ['babelify', 'stringify']
         },
 
-        reporters: ['progress'],
+        reporters: ['progress', 'spec'],
 
         port: 9876,
 
