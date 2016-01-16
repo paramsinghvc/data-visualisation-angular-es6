@@ -146,4 +146,36 @@ export default class Util {
         })
         return res;
     }
+
+    groupBy(collection, prop) {
+        let buckets = {};
+        this.each(collection, (el) => {
+            if (!buckets[el[prop]])
+                buckets[el[prop]] = [];
+            buckets[el[prop]].push(el);
+        })
+        return buckets;
+    }
+
+    countBy(collection, prop) {
+        let buckets = {};
+        this.each(collection, (el) => {
+            if (!buckets[el[prop]])
+                buckets[el[prop]] = 0;
+            buckets[el[prop]]++;
+        })
+        return buckets;
+    }
+
+    values(collection) {
+        let res = [];
+        Object.keys(collection).forEach((el) => {
+            res.push(collection[el]);
+        })
+        return res;
+    }
+
+    generateRandomHexCode() {
+        return '#' + Math.floor(Math.random() * 16777215).toString(16);
+    }
 }

@@ -166,7 +166,7 @@ describe('Util Service', () => {
 
             expect(util.pluck(arr, 'age')).toEqual([21, 22, 23]);
         })
-        
+
         describe('should find the min max out of a collection', () => {
             let arr = [{
                 id: 1,
@@ -198,6 +198,56 @@ describe('Util Service', () => {
             });
         })
 
+        describe('it should check the grouping and counting', () => {
+            let collection = [{
+                id: 1,
+                age: 21
+            }, {
+                id: 2,
+                age: 25
+            }, {
+                id: 3,
+                age: 23
+            }, {
+                id: 4,
+                age: 25
+            }];
+
+            it('should group the collection by certain property', () => {
+
+                expect(util.groupBy(collection, 'age')).toEqual({
+                    21: [{
+                        id: 1,
+                        age: 21
+                    }],
+                    23: [{
+                        id: 3,
+                        age: 23
+                    }],
+                    25: [{
+                        id: 2,
+                        age: 25
+                    }, {
+                        id: 4,
+                        age: 25
+                    }]
+                })
+
+                expect(util.countBy(collection, 'age')).toEqual({
+                    21: 1,
+                    23: 1,
+                    25: 2
+                })
+            })
+        })
+
+        it('should convert the collection to an array', () => {
+            expect(util.values({
+                a: 'b',
+                c: 'd',
+                e: 'f'
+            })).toEqual(['b', 'd', 'f'])
+        })
 
     })
 })

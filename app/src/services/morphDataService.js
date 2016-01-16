@@ -17,19 +17,17 @@ class MorphDataService {
             return 0;
         if (e.match(/\*$/))
             return e.replace(/\*$/, '');
+        if(e.match(/^v\s/))
+            return e.replace(/^v\s/, '');
         return e;
     }
 
     exec(data) {
-    	let m = [1, 2, 3, 4];
-        m = this.util.filter(m, function(r) {
-            return r % 2 == 0;
-        });
-        console.log(m)
+
         let allTextLines = data.split(/\r\n|\n|\r/);
         let headings = allTextLines[0].split(',');
         let records = [];
-        for (let i = 1; i < allTextLines.length; i++) {
+        for (let i = 1; i < allTextLines.length - 1; i++) {
             let entries = allTextLines[i].split(',');
             let rowObject = {};
             for (let j = 0; j < headings.length; j++) {
