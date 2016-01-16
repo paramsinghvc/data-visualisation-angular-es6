@@ -249,5 +249,21 @@ describe('Util Service', () => {
             })).toEqual(['b', 'd', 'f'])
         })
 
+        it('should find average of a field in a collection', () => {
+            expect(util.average([{
+                id: 1,
+                age: 1
+            }, {
+                id: 1,
+                age: 2
+            }, {
+                id: 1,
+                age: 3
+            }, {
+                id: 1,
+                age: 4
+            }], 'age')).toEqual('3');
+
+        })
     })
 })

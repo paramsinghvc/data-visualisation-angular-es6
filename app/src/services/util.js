@@ -175,7 +175,12 @@ export default class Util {
         return res;
     }
 
-    generateRandomHexCode() {
-        return '#' + Math.floor(Math.random() * 16777215).toString(16);
+    average(collection, prop) {
+        let sum = 0;
+        this.each(collection, (el) => {
+            sum += parseInt(el[prop]);
+        });
+        let avg = (sum / (collection.length)).toFixed();
+        return avg;
     }
 }

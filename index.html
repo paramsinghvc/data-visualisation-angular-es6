@@ -8,15 +8,33 @@
 </head>
 
 <body ng-controller="indexController as vm">
-    <div>
-        <chart chart-type="line" chart-data="vm.matchesLineChartData" width="900"></chart>
-        <chart chart-type="polar" chart-data="vm.matchesOppositionPieChartData" width ="400" height = "400"></chart>
-        <chart chart-type="doughnut" chart-data="vm.chartOptions"></chart>
+    <div class="container">
+        <div class="row">
+            <h2>Matches Played vs Year
+    	</div>
+    	<div class="row">
+    		<chart chart-type="line" chart-data="vm.matchesLineChartData" width="900"></chart>	
+    	</div>    	
+        <div class="row top50">
+        	<div class="col-md-4 center">
+        		<p class="bottom30 center"><strong>Matches played vs Opposition</strong></p>
+        		<chart chart-type="polar" chart-data="vm.matchesOppositionPieChartData" width="350" height="350"></chart>        
+        	</div>	
+        	<div class="col-md-4 center">
+        		<p class="bottom30 center"><strong>Avg Batting Score vs Year</strong></p>
+        		<chart chart-type="radar" chart-data="vm.matchesLineChartDataSecond" width="350" height="350"></chart>	
+        	</div>	
+        	<div class="col-md-4 center">
+        		<p class="bottom30 center"><strong>Total Match Played Results</strong></p>
+        		<chart chart-type="doughnut" chart-data="vm.matchesCountByResultDataset" class="top20" width="300" height="300"></chart>
+        	</div>	        	
+        </div>        
     </div>
     <script src="bower_components/jquery/dist/jquery.min.js"></script>
     <script src="bower_components/Chart.js/Chart.min.js"></script>
     <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="bower_components/moment/min/moment.min.js"></script>
+    <script src="bower_components/randomcolor/randomcolor.js"></script>
     <script src="bower_components/angular/angular.min.js"></script>
     <script src="app/build/index.js"></script>
 </body>

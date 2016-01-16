@@ -1,7 +1,8 @@
 export default class IndexController {
-    constructor(morphDataService, util, aggregationDataService) {
+    constructor(morphDataService, util, aggregationDataService, $scope) {
         this.morphDataService = morphDataService;
         this.util = util;
+        this.$scope = $scope;
         this.aggregationDataService = aggregationDataService;
 
         var self = this;
@@ -9,19 +10,50 @@ export default class IndexController {
             this.stats = this.morphDataService.exec(res.data);
             this.aggregationDataService.setData(this.stats);
             let matchesCount = this.aggregationDataService.countMatchesByYear();
+            let matchesWonByYear = this.aggregationDataService.countWonMatchesByYear();
+            let averageScorePerYear = this.aggregationDataService.averageScorePerYear()
+
+            let matchesWonByYearDataset = {
+                label: "Matches Won vs Year",
+                fillColor: "rgba(151,187,205,0.2)",
+                strokeColor: "rgba(151,187,205,1)",
+                pointColor: "rgba(151,187,205,1)",
+                pointStrokeColor: "#fff",
+                pointHighlightFill: "#fff",
+                pointHighlightStroke: "rgba(151,187,205,1)",
+                data: this.util.values(matchesWonByYear)
+            }
+
+            let matchesCountByYearDataset = {
+                label: "Matches Played vs Year",
+                fillColor: "rgba(220,220,220,0.2)",
+                strokeColor: "rgba(220,220,220,1)",
+                pointColor: "rgba(220,220,220,1)",
+                pointStrokeColor: "#fff",
+                pointHighlightFill: "#fff",
+                pointHighlightStroke: "rgba(220,220,220,1)",
+                data: this.util.values(matchesCount)
+            }
+
+            let averageScorePerYearDataset = {
+                label: "Average Batting Score vs Year",
+                fillColor: "rgba(151,187,205,0.2)",
+                strokeColor: "rgba(151,187,205,1)",
+                pointColor: "rgba(151,187,205,1)",
+                pointStrokeColor: "#fff",
+                pointHighlightFill: "#fff",
+                pointHighlightStroke: "rgba(151,187,205,1)",
+                data: this.util.values(averageScorePerYear)
+            }
 
             this.matchesLineChartData = {
                 labels: Object.keys(matchesCount),
-                datasets: [{
-                    label: "Matches Played vs Year",
-                    fillColor: "rgba(220,220,220,0.2)",
-                    strokeColor: "rgba(220,220,220,1)",
-                    pointColor: "rgba(220,220,220,1)",
-                    pointStrokeColor: "#fff",
-                    pointHighlightFill: "#fff",
-                    pointHighlightStroke: "rgba(220,220,220,1)",
-                    data: this.util.values(matchesCount)
-                }]
+                datasets: [matchesCountByYearDataset, matchesWonByYearDataset]
+            }
+
+            this.matchesLineChartDataSecond = {
+                labels: Object.keys(averageScorePerYear),
+                datasets: [averageScorePerYearDataset]
             }
 
             let matchesCountOpposition = this.aggregationDataService.countMatchesByOpposition();
@@ -29,35 +61,33 @@ export default class IndexController {
             for (let k in matchesCountOpposition) {
                 this.matchesOppositionPieChartData.push({
                     value: matchesCountOpposition[k],
-                    color: this.util.generateRandomHexCode(),
-                    highlight: "#FF5A5E",
+                    color: randomColor({
+                        luminosity: 'bright'
+                    }),
+                    highlight: randomColor(),
                     label: k
                 })
             }
+
+            let matchesCountByResult = this.aggregationDataService.countMatchesByResult();
+            this.matchesCountByResultDataset = [{
+                value: matchesCountByResult['lost'],
+                color: '#34495e',
+                highlight: '#354b60',
+                label: 'Lost'
+            }, {
+                value: matchesCountByResult['won'],
+                color: '#1abc9c',
+                highlight: '#16a085',
+                label: 'Won'
+            }]
+
         });
-
-
-        this.chartOptions = [{
-            value: 300,
-            color: "#F7464A",
-            highlight: "#FF5A5E",
-            label: "Red"
-        }, {
-            value: 50,
-            color: "#46BFBD",
-            highlight: "#5AD3D1",
-            label: "Green"
-        }, {
-            value: 100,
-            color: "#FDB45C",
-            highlight: "#FFC870",
-            label: "Yellow"
-        }]
 
     }
 }
 
-IndexController.$inject = ['morphDataService', 'util', 'aggregationDataService'];
+IndexController.$inject = ['morphDataService', 'util', 'aggregationDataService', '$scope'];
 
 var test = (fn) => {
     console.log('sfd')

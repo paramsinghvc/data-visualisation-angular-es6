@@ -13,7 +13,7 @@ class MorphDataService {
 
     pruneEntry(e) {
         if (typeof e === 'undefined') return 0;
-        if (e == '-' || e == 'DNB')
+        if (e == '-' || e == 'DNB' || e == 'TDNB')
             return 0;
         if (e.match(/\*$/))
             return e.replace(/\*$/, '');

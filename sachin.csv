@@ -1,5 +1,5 @@
 batting_score,wickets,runs_conceded,catches,stumps,opposition,ground,date,match_result,result_margin,toss,batting_innings
-0,-,-,0,0,v Pakistan,Gujranwala,18 Dec 1989,lost,7 runs,won,2nd
+10,-,-,0,0,v Pakistan,Gujranwala,18 Dec 1989,lost,7 runs,won,2nd
 0,-,-,0,0,v New Zealand,Dunedin,1 Mar 1990,lost,108 runs,won,2nd
 36,-,-,0,0,v New Zealand,Wellington,6 Mar 1990,won,1 runs,won,1st
 10,-,-,1,0,v Sri Lanka,Sharjah,25 Apr 1990,lost,3 wickets,lost,1st
@@ -440,7 +440,7 @@ TDNB,-,-,1,0,v Australia,Centurion,28 Sep 2009,n/r,-,lost,2nd
 96*,-,-,0,0,v Sri Lanka,Cuttack,21 Dec 2009,won,7 wickets,lost,2nd
 8,-,-,1,0,v Sri Lanka,Kolkata,24 Dec 2009,won,7 wickets,lost,2nd
 4,-,-,0,0,v South Africa,Jaipur,21 Feb 2010,won,1 runs,lost,1st
-200*,-,-,0,0,v South Africa,Gwalior,24 Feb 2010,won,153 runs,won,1st
+180*,-,-,0,0,v South Africa,Gwalior,24 Feb 2010,won,153 runs,won,1st
 7,-,-,0,0,v South Africa,Durban,12 Jan 2011,lost,135 runs,lost,2nd
 24,-,-,0,0,v South Africa,Johannesburg,15 Jan 2011,won,1 runs,won,1st
 28,-,-,0,0,v Bangladesh,Dhaka,19 Feb 2011,won,87 runs,lost,1st

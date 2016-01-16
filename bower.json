@@ -17,6 +17,7 @@
     "jquery": "~2.2.0",
     "bootstrap": "~3.3.6",
     "Chart.js": "~1.0.2",
-    "moment": "~2.11.1"
+    "moment": "~2.11.1",
+    "randomcolor": "~0.4.2"
   }
 }

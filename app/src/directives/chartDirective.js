@@ -19,28 +19,30 @@ export default class ChartDirective {
             this.$timeout(() => {
                 let ctx = $el[0].getContext('2d');
                 let chart = new Chart(ctx);
+                let chartObj;
                 switch ($scope.chartType) {
                     case 'line':
-                        chart.Line($scope.chartData, {
+                        chartObj = chart.Line($scope.chartData, {
                             responsive: true
-                        });
+                        });                       
                         break;
                     case 'bar':
-                        chart.Bar($scope.chartData, $scope.chartOptions);
+                        chartObj = chart.Bar($scope.chartData, $scope.chartOptions);
                         break;
                     case 'pie':
-                        chart.Pie($scope.chartData, $scope.chartOptions);
+                        chartObj = chart.Pie($scope.chartData, $scope.chartOptions);
                         break;
                     case 'polar':
-                        chart.PolarArea($scope.chartData, $scope.chartOptions);
+                        chartObj = chart.PolarArea($scope.chartData, $scope.chartOptions);
                         break;
                     case 'radar':
-                        chart.Radar($scope.chartData, $scope.chartOptions);
+                        chartObj = chart.Radar($scope.chartData, $scope.chartOptions);
                         break;
                     case 'doughnut':
-                        chart.Doughnut($scope.chartData, $scope.chartOptions);
+                        chartObj = chart.Doughnut($scope.chartData, $scope.chartOptions);
                         break;
                 }
+
             });
         }
     }

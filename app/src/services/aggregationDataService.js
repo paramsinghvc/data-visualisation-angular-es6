@@ -15,8 +15,27 @@ export default class AggregationDataService {
         return this.util.countBy(this.data, 'year');
     }
 
+    countWonMatchesByYear(){
+    	let matchesWon  = this.util.where(this.data, {
+    		match_result : 'won'
+    	});
+    	return this.util.countBy(matchesWon, 'year');
+    }
+
+    averageScorePerYear(){
+    	let matchesGroupedByYear = this.util.groupBy(this.data, 'year');
+    	matchesGroupedByYear =  this.util.map(matchesGroupedByYear, (groupedCollection) => {
+    		return this.util.average(groupedCollection, 'batting_score');
+    	})
+    	return matchesGroupedByYear;
+    }
+
     countMatchesByOpposition() {
         return this.util.countBy(this.data, 'opposition');        
+    }
+
+    countMatchesByResult(){
+    	return this.util.countBy(this.data, 'match_result');        	
     }
 
     maxLastPlayedYear() {
