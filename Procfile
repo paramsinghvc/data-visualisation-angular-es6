@@ -1,1 +1,1 @@
-web: gulp transpile
+web: npm install
