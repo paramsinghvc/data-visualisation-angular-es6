@@ -38,6 +38,7 @@ gulp.task('transpile:watch', ['transpile'], reload);
 
 gulp.task('serveprod', function() {
     connect.server({
+        root : __dirname,
         port: process.env.PORT || 5000,
         livereload: false
     });
