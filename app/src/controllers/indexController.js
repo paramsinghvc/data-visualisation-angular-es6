@@ -1,14 +1,21 @@
 export default class IndexController {
-    constructor(morphDataService, util, aggregationDataService, $scope) {
+    constructor(morphDataService, util, aggregationDataService, $scope, predicateLogicService) {
         this.morphDataService = morphDataService;
         this.util = util;
         this.$scope = $scope;
         this.aggregationDataService = aggregationDataService;
+        this.predicateLogicService = predicateLogicService;
+        this.isFormerCricketer = false;
+        this.isGoodCricketer = false;
 
         var self = this;
         this.morphDataService.fetchData().then((res) => {
             this.stats = this.morphDataService.exec(res.data);
+
             this.aggregationDataService.setData(this.stats);
+
+            let sachinPerformance = this.aggregationDataService.evalPerformance();   
+
             let matchesCount = this.aggregationDataService.countMatchesByYear();
             let matchesWonByYear = this.aggregationDataService.countWonMatchesByYear();
             let averageScorePerYear = this.aggregationDataService.averageScorePerYear()
@@ -46,6 +53,17 @@ export default class IndexController {
                 data: this.util.values(averageScorePerYear)
             }
 
+            let sachinPerformanceDataset = {
+                label: "Sachin Performance vs Year",
+                fillColor: "rgba(151,187,205,0.2)",
+                strokeColor: "rgba(151,187,205,1)",
+                pointColor: "rgba(151,187,205,1)",
+                pointStrokeColor: "#fff",
+                pointHighlightFill: "#fff",
+                pointHighlightStroke: "rgba(151,187,205,1)",
+                data: this.util.values(sachinPerformance)
+            }
+
             this.matchesLineChartData = {
                 labels: Object.keys(matchesCount),
                 datasets: [matchesCountByYearDataset, matchesWonByYearDataset]
@@ -54,6 +72,11 @@ export default class IndexController {
             this.matchesLineChartDataSecond = {
                 labels: Object.keys(averageScorePerYear),
                 datasets: [averageScorePerYearDataset]
+            }
+
+            this.sachinPerformanceLineChartData = {
+            	labels : Object.keys(sachinPerformance),
+            	datasets :  [sachinPerformanceDataset]
             }
 
             let matchesCountOpposition = this.aggregationDataService.countMatchesByOpposition();
@@ -82,13 +105,11 @@ export default class IndexController {
                 label: 'Won'
             }]
 
+            this.isFormerCricketer = this.aggregationDataService.isFormerCricketer();
+            this.isGoodCricketer = this.aggregationDataService.isGoodCricketer( this.util.values(sachinPerformance));
         });
 
     }
 }
 
-IndexController.$inject = ['morphDataService', 'util', 'aggregationDataService', '$scope'];
-
-var test = (fn) => {
-    console.log('sfd')
-}
+IndexController.$inject = ['morphDataService', 'util', 'aggregationDataService', '$scope', 'predicateLogicService'];

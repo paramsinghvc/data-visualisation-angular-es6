@@ -9,14 +9,13 @@ var sass = require('gulp-sass');
 var concat = require('gulp-concat');
 
 gulp.task('sass', function() {
-    gulp.src('assets/sass/**/*.scss')
+    return gulp.src('assets/sass/**/*.scss')
         .pipe(sass().on('error', sass.logError))
         .pipe(concat('build.css'))
         .pipe(gulp.dest('assets/css'))
-        .pipe(reload({
-            stream: true
-        }));
 });
+
+gulp.task('sass:watch', ['sass'], reload);
 
 gulp.task('transpile', function() {
     return browserify({
@@ -31,11 +30,10 @@ gulp.task('transpile', function() {
         .bundle()
         .pipe(source('index.js'))
         .pipe(gulp.dest('app/build'))
-        .pipe(reload({
-            stream: true
-        }));
 
 });
+
+gulp.task('transpile:watch', ['transpile'], reload);
 
 gulp.task('default', ['transpile', 'sass'], function() {
     browserSync.init({
@@ -43,6 +41,6 @@ gulp.task('default', ['transpile', 'sass'], function() {
             baseDir: "./"
         }
     });
-    gulp.watch(['app/src/**/*.js'], ['transpile']);
-    gulp.watch(['assets/sass/**/*.scss'], ['sass']);
+    gulp.watch(['app/src/**/*.js'], ['transpile:watch']);
+    gulp.watch(['assets/sass/**/*.scss'], ['sass:watch']);
 });

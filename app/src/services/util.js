@@ -19,7 +19,7 @@ export default class Util {
     }
 
     /*  Usage : 
-		let m = [1, 2, 3, 4];
+        let m = [1, 2, 3, 4];
         m = this.util.each(m, function(r) {
             console.log(r);
         });
@@ -38,7 +38,7 @@ export default class Util {
     }
 
     /*  Usage : 
-		let m = [1, 2, 3, 4];
+        let m = [1, 2, 3, 4];
         m = this.util.map(m, function(r) {
             return 2 * r;
         });
@@ -69,7 +69,7 @@ export default class Util {
     }
 
     /*  Usage : 
-		let m = [1, 2, 3, 4];
+        let m = [1, 2, 3, 4];
         m = this.util.filter(m, function(r) {
             return r % 2 == 0;
         });
@@ -160,9 +160,15 @@ export default class Util {
     countBy(collection, prop) {
         let buckets = {};
         this.each(collection, (el) => {
-            if (!buckets[el[prop]])
-                buckets[el[prop]] = 0;
-            buckets[el[prop]]++;
+            if (prop) {
+                if (!buckets[el[prop]])
+                    buckets[el[prop]] = 0;
+                buckets[el[prop]]++;
+            } else {
+                if (!buckets[el])
+                    buckets[el] = 0;
+                buckets[el]++;
+            }
         })
         return buckets;
     }
@@ -182,5 +188,10 @@ export default class Util {
         });
         let avg = (sum / (collection.length)).toFixed();
         return avg;
+    }
+
+    distinct(collection, prop) {
+        let res = this.countBy(collection, prop);
+        return Object.keys(res);
     }
 }

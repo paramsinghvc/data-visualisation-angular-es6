@@ -233,6 +233,8 @@ describe('Util Service', () => {
                     }]
                 })
 
+                expect(util.distinct(collection, 'age')).toEqual(['21', '25', '23']);
+
                 expect(util.countBy(collection, 'age')).toEqual({
                     21: 1,
                     23: 1,
